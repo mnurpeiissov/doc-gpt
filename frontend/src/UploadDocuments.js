@@ -7,31 +7,6 @@ function UploadDocuments() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  // Some inline styling to keep things minimal
-  const containerStyle = {
-    maxWidth: '600px',
-    margin: '20px auto',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    backgroundColor: '#fff',
-  };
-
-  const progressBarContainerStyle = {
-    height: '8px',
-    backgroundColor: '#eee',
-    borderRadius: '4px',
-    marginTop: '10px',
-    overflow: 'hidden',
-  };
-
-  const progressBarStyle = {
-    height: '100%',
-    width: `${uploadProgress}%`,
-    backgroundColor: '#007bff',
-    transition: 'width 0.3s ease',
-  };
-
   const handleFileChange = (e) => {
     setFiles(e.target.files);
   };
@@ -53,17 +28,16 @@ function UploadDocuments() {
         formData.append('files', files[i]);
       }
 
-      // Adjust URL to point to your FastAPI endpoint
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/v1/documents`,
         formData,
         {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          headers: { 'Content-Type': 'multipart/form-data' },
           onUploadProgress: (progressEvent) => {
             if (progressEvent.total) {
-              const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+              const percent = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
               setUploadProgress(percent);
             }
           },
@@ -79,30 +53,31 @@ function UploadDocuments() {
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="container">
       <h2>Upload Documents</h2>
       <form onSubmit={handleUpload}>
-        <div style={{ marginBottom: 10 }}>
-          <label>Choose files (txt/docx/pdf):</label>
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            accept=".txt,.docx,.pdf"
-            style={{ display: 'block', marginTop: 5 }}
-          />
-        </div>
-        <button type="submit">Upload</button>
+        <label className="label">Choose files (txt/docx/pdf):</label>
+        <input
+          type="file"
+          multiple
+          onChange={handleFileChange}
+          accept=".txt,.docx,.pdf"
+          className="input-file"
+        />
+        <button type="submit" className="button">Upload</button>
       </form>
 
       {uploadProgress > 0 && (
-        <div style={progressBarContainerStyle}>
-          <div style={progressBarStyle} />
+        <div className="progress-bar-container">
+          <div
+            className="progress-bar"
+            style={{ width: `${uploadProgress}%` }}
+          />
         </div>
       )}
 
-      {message && <p style={{ color: 'green', marginTop: 10 }}>{message}</p>}
-      {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
+      {message && <p className="message">{message}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }

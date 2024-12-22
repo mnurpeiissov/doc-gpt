@@ -7,15 +7,6 @@ function QueryDocuments() {
   const [docLink, setDocLink] = useState('');
   const [error, setError] = useState('');
 
-  const containerStyle = {
-    maxWidth: '600px',
-    margin: '20px auto',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    backgroundColor: '#fff',
-  };
-
   const handleQuery = async (e) => {
     e.preventDefault();
     setAnswer('');
@@ -32,9 +23,7 @@ function QueryDocuments() {
         `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/v1/query`,
         { query },
         {
-          headers: {
-            'Content-Type': 'application/json',
-          }
+          headers: { 'Content-Type': 'application/json' }
         }
       );
 
@@ -51,38 +40,36 @@ function QueryDocuments() {
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="container">
       <h2>Query Documents</h2>
       <form onSubmit={handleQuery}>
-        <div style={{ marginBottom: 10 }}>
-          <label>Question:</label>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            style={{ display: 'block', width: '100%', marginTop: 5 }}
-            placeholder="Enter your question"
-            required
-          />
-        </div>
-        <button type="submit">Search</button>
+        <label className="label">Question:</label>
+        <input
+          type="text"
+          className="input-text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Enter your question"
+          required
+        />
+        <button type="submit" className="button">Search</button>
       </form>
 
       {answer && (
-        <div style={{ marginTop: 10 }}>
+        <div style={{ marginTop: '1rem' }}>
           <h3>Answer:</h3>
           <p>{answer}</p>
         </div>
       )}
       {docLink && (
-        <div style={{ marginTop: 10 }}>
+        <div style={{ marginTop: '1rem' }}>
           <h4>Reference Link:</h4>
           <a href={docLink} target="_blank" rel="noopener noreferrer">
             View Document Paragraph
           </a>
         </div>
       )}
-      {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
