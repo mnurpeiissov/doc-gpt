@@ -14,7 +14,7 @@ import hashlib
 
 from tiktoken import get_encoding
 
-def split_text_into_chunks(text, max_tokens=500, overlap=50):
+def split_text_into_chunks(text, max_tokens=1000, overlap=50):
     tokenizer = get_encoding("cl100k_base")
     tokens = tokenizer.encode(text)
     
