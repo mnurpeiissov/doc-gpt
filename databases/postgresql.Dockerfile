@@ -21,7 +21,7 @@ COPY init-pgvector.sql /docker-entrypoint-initdb.d/
 # Ensure the script runs with the proper permissions
 RUN chmod 755 /docker-entrypoint-initdb.d/init-pgvector.sql
 # Set environment variables
-ENV POSTGRES_DB=vectordb
+ENV POSTGRES_DB=postgres
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 USER postgres
