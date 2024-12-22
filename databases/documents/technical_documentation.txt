@@ -1,0 +1,23 @@
+API Documentation: WeatherNow API v1.0
+
+Base URL:
+https://api.weathernow.com/v1
+
+1. Authentication:
+- API Key: Obtain your API key by registering on our portal.
+- Pass the key in the `Authorization` header: `Authorization: Bearer <API_KEY>`.
+
+2. Endpoints:
+- GET /weather/current: Retrieve current weather by location.
+  Parameters:
+    - city (string): City name (required).
+    - units (string): Metric or imperial (optional, default: metric).
+
+- GET /weather/forecast: Retrieve 7-day forecast.
+  Parameters:
+    - city (string): City name (required).
+
+3. Response Format:
+- JSON object with fields like temperature, humidity, and wind speed.
+
+Contact: api-support@weathernow.com
