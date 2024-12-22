@@ -24,11 +24,7 @@ async def upload_documents(
         content = await file.read()
         file_hash = hashlib.md5(content).hexdigest()
         if vector_store.exists(file_hash):
-            return {"status": "documents already indexed"}
-            # raise HTTPException(
-            #     status_code=400,
-            #     detail=f"The file {file.filename} was already uploaded."
-            # )
+            continue
         _, file_extension = os.path.splitext(file.filename.lower())
         if file_extension == ".txt":
             text = content.decode("utf-8", errors="ignore")

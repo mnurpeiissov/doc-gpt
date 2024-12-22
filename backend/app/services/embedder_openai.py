@@ -27,15 +27,13 @@ class OpenAIEmbedder(Embedder):
             ValueError: If the input is invalid.
             Exception: For any unexpected errors from the OpenAI API.
         """
-        if not texts or not isinstance(texts, list):
-            raise ValueError("Input must be a non-empty list of strings.")
 
         try:
             response = self.client.embeddings.create(
                 input=texts,
                 model="text-embedding-3-small"
             )
-            embeddings = [item.embedding for item in response.data]
-            return embeddings
+            
+            return response.data[0].embedding
         except Exception as e:
             raise RuntimeError(f"Failed to generate embeddings: {e}")
