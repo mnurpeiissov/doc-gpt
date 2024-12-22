@@ -73,7 +73,9 @@ services:
       - POSTGRES_USER=${POSTGRES_USER?Variable not set}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
   db-init:
-    image: postgres:15
+    build: 
+      context: ./databases
+      dockerfile: postgresql.Dockerfile
     depends_on:
       db:
         condition: service_healthy
@@ -88,7 +90,7 @@ services:
           sleep 2
         done
         echo 'Database is ready!'
-        psql -h db -U $POSTGRES_USER -d $POSTGRES_DB -c 'CREATE EXTENSION IF NOT EXISTS vector;'
+        PGPASSWORD=postgres psql -h db -U $POSTGRES_USER -d $POSTGRES_DB -c 'CREATE EXTENSION IF NOT EXISTS vector;'
         echo 'Extension installed (if it was missing).'
       "
 
