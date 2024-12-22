@@ -1,6 +1,7 @@
 import re
-from typing import List, Tuple, Optional, Dict
 import uuid
+from typing import Dict, List, Optional, Tuple
+
 
 def validate_answer_references(answer: str, meta_data_list: List[Tuple[str, int, str]]) -> Optional[Dict[str, str]]:
     """

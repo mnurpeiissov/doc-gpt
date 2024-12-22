@@ -59,7 +59,7 @@ Doc GPT is a retrieval-augmented question-answering system designed to allow use
 ### Parapgraph Retrieval
 - Another challenge/problem comes from the fact of storing the documents in paragraphs and when the similarity search return the specific paragraph and it is sent to the LLM for inference, the information needed could be in another paragraph as well. The solution might be to just pass the whole document, but it would take lot more tokens
 
-### 
+### Connection pooling
 - Access of the vector database. I have approached the connection for vector database as global state of the application, so one must ensure that the connections are thread safe. We cant have only one open connection and share it across users, rather I used connection pool where the pool of connections is there and one connections will be assigned per user and reused afterwards
 
 ---

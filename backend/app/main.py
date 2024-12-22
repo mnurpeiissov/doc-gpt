@@ -1,12 +1,10 @@
-from fastapi import FastAPI
-from fastapi.routing import APIRoute
-from starlette.middleware.cors import CORSMiddleware
-
 from app.api.main import api_router
 from app.core.config import settings
 from app.services.vector_store_pg import PostgresVectorStore
+from fastapi import FastAPI
+from fastapi.routing import APIRoute
 from psycopg_pool import ConnectionPool
-
+from starlette.middleware.cors import CORSMiddleware
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:

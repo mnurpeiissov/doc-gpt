@@ -1,11 +1,10 @@
-from fastapi import APIRouter, HTTPException
-from app.models import QueryRequest
-from app.models import QueryResponse
-from app.services.llm_openai import OpenAILLM
-from app.services.guardrails import validate_answer_references
-from app.services.embedder_openai import OpenAIEmbedder
 from app.api.deps import VectorStore
 from app.core.config import settings
+from app.models import QueryRequest, QueryResponse
+from app.services.embedder_openai import OpenAIEmbedder
+from app.services.guardrails import validate_answer_references
+from app.services.llm_openai import OpenAILLM
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter(tags=["query"])
 

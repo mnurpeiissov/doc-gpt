@@ -1,14 +1,14 @@
+import hashlib
 import os
 import uuid
-import hashlib
-from pdfplumber import open as open_pdf
-from docx import Document
 from io import BytesIO
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from app.services.vector_store_pg import PostgresVectorStore
-from app.services.embedder_openai import OpenAIEmbedder
 from app.core.config import settings
+from app.services.embedder_openai import OpenAIEmbedder
+from app.services.vector_store_pg import PostgresVectorStore
+from docx import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from pdfplumber import open as open_pdf
 
 if settings.INITIAL_DATA_DIR:
     vector_store = PostgresVectorStore()

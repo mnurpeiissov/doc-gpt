@@ -1,6 +1,6 @@
-from openai import OpenAI
-from app.services.interfaces import LLM
 from app.core.config import settings
+from app.services.interfaces import LLM
+from openai import OpenAI
 
 
 class OpenAILLM(LLM):

@@ -1,7 +1,9 @@
-from typing import List, Dict, Any
-from psycopg_pool import ConnectionPool
+from typing import Any, Dict, List
+
 from app.core.config import settings
 from app.services.interfaces import VectorStore
+from psycopg_pool import ConnectionPool
+
 
 class PostgresVectorStore(VectorStore):
     def __init__(self, pool: ConnectionPool):

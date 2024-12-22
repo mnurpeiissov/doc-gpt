@@ -1,8 +1,9 @@
+import logging
 from typing import List
+
 from app.core.config import settings
 from app.services.interfaces import Embedder
 from openai import OpenAI
-import logging
 
 
 class OpenAIEmbedder(Embedder):

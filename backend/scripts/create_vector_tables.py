@@ -1,5 +1,5 @@
-from app.services.vector_store_pg import PostgresVectorStore
 from app.core.config import settings
+from app.services.vector_store_pg import PostgresVectorStore
 from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_SERVER}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}")
@@ -18,6 +18,7 @@ with vector_store.pool.connection() as conn:
             document_hash TEXT,
             embedding vector(1536)
         );
+        CREATE INDEX ON documents USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
         """)
     conn.commit()
     conn.close()
