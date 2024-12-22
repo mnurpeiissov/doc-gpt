@@ -5,6 +5,9 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.main import api_router
 from app.core.config import settings
 from app.services.vector_store_pg import PostgresVectorStore
+from psycopg_pool import ConnectionPool
+
+
 
 def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
@@ -15,8 +18,16 @@ app = FastAPI(
     generate_unique_id_function=custom_generate_unique_id,
 )
 
-vector_store = PostgresVectorStore()
-app.state.vector_store = vector_store
+@app.on_event("startup")
+def setup_vector_store():
+    pool = ConnectionPool(conninfo=f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_SERVER}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}")
+    app.state.vector_store = PostgresVectorStore(pool)
+
+@app.on_event("shutdown")
+def close_vector_store():
+    app.state.vector_store.pool.close()
+
+
 
 #Set all CORS enabled origins
 if settings.all_cors_origins:

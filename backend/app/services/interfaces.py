@@ -24,7 +24,7 @@ class LLM(ABC):
         pass
 
 
-class EMBEDDER(ABC):
+class Embedder(ABC):
     @abstractmethod
     def get_embeddings(self,texts: List[str]) -> List[float]:
         pass

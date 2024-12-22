@@ -2,10 +2,10 @@ from openai import OpenAI
 from app.services.interfaces import LLM
 from app.core.config import settings
 
-client = OpenAI(api_key=settings.OPENAI_API_KEY)
-
 
 class OpenAILLM(LLM):
+    def __init__(self, client: OpenAI = None):
+        self.client = client or OpenAI(api_key=settings.OPENAI_API_KEY)
 
     def generate_answer(self, query: str, context: str) -> str:
         """
@@ -28,7 +28,7 @@ class OpenAILLM(LLM):
         )
         user_message = f"Question: {query}\n\nContext:\n{context}\nAnswer:"
         try:
-            response = client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
                     {"role": "system", "content": system_message},
