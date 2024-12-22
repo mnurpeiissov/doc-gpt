@@ -19,3 +19,4 @@ python-docx
 tenacity
 alembic
 psycopg-pool
+tiktoken

@@ -11,6 +11,21 @@ from docx import Document
 from io import BytesIO
 import hashlib
 
+
+from tiktoken import get_encoding
+
+def split_text_into_chunks(text, max_tokens=500, overlap=50):
+    tokenizer = get_encoding("cl100k_base")
+    tokens = tokenizer.encode(text)
+    
+    chunks = []
+    for i in range(0, len(tokens), max_tokens - overlap):
+        chunk = tokens[i:i + max_tokens]
+        chunks.append(tokenizer.decode(chunk))
+    
+    return chunks
+
+
 router = APIRouter(tags=["documents"])
 
 
@@ -40,12 +55,13 @@ async def upload_documents(
                         text += page.extract_text() + "\n"
         else:
             raise ValueError("Unsupported file format. Please upload a .txt, .docx, or .pdf file.")
-        splitter = RecursiveCharacterTextSplitter(
-            separators=["\n\n"],
-            chunk_size=500,
-            chunk_overlap=50
-        )
-        paragraphs = splitter.split_text(text)
+        # splitter = RecursiveCharacterTextSplitter(
+        #     separators=["\n\n"],
+        #     chunk_size=500,
+        #     chunk_overlap=50
+        # )
+        # paragraphs = splitter.split_text(text)
+        paragraphs = split_text_into_chunks(text)
         if not paragraphs:
             raise HTTPException(status_code=400, detail=f"Could not parse {file.filename}")
         embedder = OpenAIEmbedder()
