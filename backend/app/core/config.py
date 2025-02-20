@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
     FRONTEND_HOST: str = "http://localhost:5173"
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
-    OPENAI_API_KEY: str = "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"
+    OPENAI_API_KEY: str = "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"
     INITIAL_DATA_DIR: str = '/app/'
     BACKEND_CORS_ORIGINS: Annotated[
         list[AnyUrl] | str, BeforeValidator(parse_cors)

@@ -10,7 +10,7 @@ from pdfplumber import open as open_pdf
 from docx import Document
 from io import BytesIO
 import hashlib
-
+import base64
 
 from tiktoken import get_encoding
 
@@ -53,14 +53,15 @@ async def upload_documents(
                 with open_pdf(pdf_file) as pdf:
                     for page in pdf.pages:
                         text += page.extract_text() + "\n"
+        elif file_extension in ('.jpg', '.png', 'jpeg'):
+            encoded_image = base64.b64encode(content).decode('ascii')
+            
         else:
             raise ValueError("Unsupported file format. Please upload a .txt, .docx, or .pdf file.")
-        # splitter = RecursiveCharacterTextSplitter(
-        #     separators=["\n\n"],
-        #     chunk_size=500,
-        #     chunk_overlap=50
-        # )
-        # paragraphs = splitter.split_text(text)
+
+    
+
+
         paragraphs = split_text_into_chunks(text)
         if not paragraphs:
             raise HTTPException(status_code=400, detail=f"Could not parse {file.filename}")

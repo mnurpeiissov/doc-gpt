@@ -88,7 +88,7 @@ function UploadDocuments() {
             type="file"
             multiple
             onChange={handleFileChange}
-            accept=".txt,.docx,.pdf"
+            accept=".txt,.docx,.pdf,image/png, image/jpeg, image/jpg, image/gif, image/webp"
             style={{ display: 'block', marginTop: 5 }}
           />
         </div>
