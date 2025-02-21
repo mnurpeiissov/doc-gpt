@@ -9,6 +9,7 @@ from app.core.config import settings
 
 router = APIRouter(tags=["query"])
 
+
 @router.post("", response_model=QueryResponse)
 def query_documents(
     vector_store: VectorStore,
